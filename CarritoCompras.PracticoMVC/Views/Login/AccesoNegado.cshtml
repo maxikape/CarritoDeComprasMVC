@@ -1,0 +1,35 @@
+﻿<html>
+<head>
+    <title></title>
+
+    @{
+        Layout = "";
+        var items = ViewBag.item;
+    }
+
+
+
+</head>
+<body>
+
+
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+
+    <script>
+       if (ViewBag.item == "1") {
+
+           alert("Usted no tiene acceso a esta seccion , presione para ser redirigido");
+
+           var url = "@Url.Action("index", "Admin")";
+           window.location.href = url;
+       }
+
+
+       
+ 
+       
+    </script>
+
+    
+</body>
+</html>

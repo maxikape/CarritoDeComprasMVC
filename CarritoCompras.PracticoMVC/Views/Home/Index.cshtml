@@ -1,0 +1,233 @@
+﻿@model List<Entidades.Entidades.Producto>
+@*@model Tuple<List<Entidades.Entidades.Producto>, Entidades.Modelos.CarritoModel>*@
+
+
+@{
+
+
+    List<Entidades.Entidades.Producto> lista = ViewBag.items;
+}
+
+
+<head>
+
+    <title>adsasdasd</title>
+
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Estilocenter.css" rel="stylesheet" />
+
+
+</head>
+
+
+
+
+<body>
+
+
+
+    <section class="content" style="background-color: white; margin-left: 50px; margin-top: 1px;">
+
+        <div class="row" style="background-color: white;">
+
+            <div class="card-group row " style="background-color: white;">
+
+                @foreach (var m in Model)
+                {
+
+                    <div id="cards_landscape_wrap-2" class=" col-lg-3 col-12" style="height: 20rem; background-color:white; margin-top:35px">
+
+                        <div class="" style="max-width: 10rem; height: 20rem;">
+                            <div class="card-flyer">
+                                <img src="@m.UrlImage" class="card-img-top" style="width:150px; height:150px;">
+
+                                <div class="card-body">
+                                    <p class="card-title">@m.Nombre.ToUpper()</p>
+                                    <p class="card-text"> $@m.PrecioUnitario</p>
+
+                                    @*<p> @Html.ActionLink("Agregar", "Carrito", "Home", new { Id = m.CodigoProducto })</p>
+                                        <input class="btn-xs btn-primary" itemid="m.CodigoProducto" type="button" id="AgregarCarrito" name="btn_act" onclick="AgregarCarrito(this)" onclick="location.href='@Url.Action("Carrito", "Home", new { id = m.CodigoProducto })'"><span class="glyphicon glyphicon-alert"> Agregar </span>*@
+
+                                </div>
+
+                                <button type="button" id="@m.CodigoProducto" class="btn btn-sm btn-primary btnModal" data-id="@m.CodigoProducto" @*onclick="fnBtnModal(@m.CodigoProducto)"*@> Agregar</button>
+                                @*<button class="btn btn-sm btn-primary" type="button" id="botonModal" name="btn_act" onclick="location.href='@Url.Action("Home", "AgregarCarrito", new { id = m.CodigoProducto })'"><span class="glyphicon glyphicon-edit"> Agregar </span></button>*@
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                }
+
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- Modal -->
+    <div class="modal fade  " id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:260px;">
+        <div class="modal-dialog" role="document" >
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title abs-center" id="exampleModalLabel">Cantidad</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="abs-center">@Html.TextBox("txtCant")</div>
+                    
+
+                    
+
+                </div>
+                <div class="modal-footer abs-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="Save" data-us="">Confirmar</button>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/sweetalert2.all.min.js.js"></script>
+
+    <script type="text/javascript">
+
+        @*function fnBtnModal(ca) {
+            var id = ca;
+            $('#modal1').modal();
+            //cuando confirmo la cantidad envio al obtejeto carritomodel
+            $('#Save').click(function () {
+
+                    var url = "@Url.Action("AgregarCarrito","Home")";
+                    var cantida = $("#txtCant").val();
+                    var CodigoProd = id;
+
+                    var data = { cantidad: cantida, CodigoProducto: CodigoProd };
+
+                    $.post(url, data)
+                $('#modal1').modal('hide');
+            });
+
+
+        }*@
+
+        $('.btnModal').click(function () {
+            var id = $(this).attr("data-id");
+            $("#Save").attr("data-us", id);
+
+            $("#modal1").modal();
+        });
+            //cuando confirmo la cantidad envio al obtejeto carritomodel
+        $("#Save").click(function () {
+
+            var codProducto = $(this).attr("data-us");
+            var cantida = $("#txtCant").val();
+
+            $.ajax({
+
+                url: '/Home/AgregarCarrito',
+                type: 'Post',
+                data: {CodigoProducto:codProducto, Cantidad:cantida},
+                dataType: 'json',
+
+                success: function (result) {
+                    $("#modal1").modal('hide');
+
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Producto Agregado!!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                },
+                error: function () {
+                    console.log("fallo");
+
+                }
+            });
+
+        });
+
+
+
+
+                @*$('.btnModal').click(function () {
+            $('#modal1').modal(function () {
+            });
+            //cuando confirmo la cantidad envio al obtejeto carritomodel
+                $('#Save').click(function () {
+                var url = "@Url.Action("AgregarCarrito","Home")";
+                var cantida = $("#txtCant").val();
+                    //var CodigoProd = $("#txtCant").val();
+                   /* var CodigoProd = on.click('.btnModal').val();*/
+                    var CodigoProd =$('.btnModal');
+                    var data = { cantidad: cantida, CodigoProducto : CodigoProd };
+                $.post(url, data)
+
+                });
+        });*@
+
+
+
+
+
+    </script>
+
+    @*////
+        //$('#myModal').on('shown.bs.modal', function AgregarCarrito() {
+        //    $('#myInput').trigger('focus')
+        //})
+        ////
+        //function AgregarCarrito(item) {
+        //    var itemId = $(item).attr("itemid");
+        //    alert(itemId)
+
+        //var formdata = new FormData();
+        //formdata.append("itemid", itemId)
+
+        //$.ajax({
+        //    async = true,
+        //    type ='Post',
+        //    contentType = false,
+        //    processData = false,
+        //    data = formdata,
+        //    url ='Agregar/Index',
+        //    success: function (data) {
+
+
+        //    },
+
+        //    error: function () {
+        //        alert("Hubo un problema");
+        //    },
+
+        //});*@
+
+
+
+
+
+
+
+
+
+</body>                @*<div class="col-lg-3 col-6">…</div>*@
+
+
+
+
+
+
+

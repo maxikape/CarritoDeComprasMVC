@@ -1,0 +1,49 @@
+﻿@model Entidades.Entidades.Usuario
+
+<head>
+    @{ Layout = ""; }
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.js"></script>
+    <link href="~/Content/EstiloLogin.css" rel="stylesheet" />
+
+</head>
+
+
+<body>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+
+            <div class="fadeIn first">
+                <img src="~/images/ava.png" id="icon" alt="User Icon" style="height:70px; width:70px;" />
+            </div>
+
+            @using (Html.BeginForm("Logeo", "Login"))
+            {
+
+                        <div class="form-group">
+
+
+                            @Html.TextBoxFor(model => model.NombreUsuario, new { @class = "form-control", placeholder = "Usuario" });
+                            @Html.ValidationMessageFor(model => model.NombreUsuario, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="form-group">
+
+
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = "Contraseña" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+                        </div>
+
+                               <input type="submit" value="Agregar" id="file" class="btn btn-primary mx-auto" />     
+                               
+             }
+
+
+        </div>
+    </div>
+
+</body> 
+                                                                

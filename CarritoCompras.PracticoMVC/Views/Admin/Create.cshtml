@@ -1,0 +1,137 @@
+﻿@model Entidades.Entidades.Producto
+
+@{
+    Layout = null;
+    List<SelectListItem> items = (List<SelectListItem>)ViewBag.items;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+    <link href="~/Content/Estilocenter.css" rel="stylesheet" />
+</head>
+<body>
+
+
+    <div class="container " style="height:900px;">
+        <div class="row justify-content-center align-items-center">
+
+            <div class="card " style="width: 700px;">
+
+                <div class="card-header text-center">
+                    <h3>Nuevo Producto</h3>
+                </div>
+
+                <div class="card-body ">
+
+
+                    @using (Html.BeginForm("Create", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+                    {
+                        @Html.AntiForgeryToken()
+
+                    <div>
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label " })
+
+                            @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="form-group">
+                           
+
+                            @Html.TextAreaFor(model => model.Descripcion, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PrecioUnitario, htmlAttributes: new { @class = "control-label " })
+
+                            @Html.EditorFor(model => model.PrecioUnitario, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PrecioUnitario, "", new { @class = "text-danger" })
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            @try
+                            {
+
+                                @Html.DropDownListFor(Model => Model.IdMarca, items, "Marca", new { @class = "form-control" })
+                            }
+                            catch (Exception ex)
+                            {
+
+                                throw ex;
+                            }
+                        </div>
+
+                        <div>
+                            @Html.CheckBoxFor(model => model.Activo, new { htmlAttributes = new { } })
+
+                            @Html.LabelFor(model => model.Activo, htmlAttributes: new { @class = "form-check-imput" })
+                            @Html.ValidationMessageFor(model => model.Activo, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="custom-file">
+                            @Html.LabelFor(model => model.img, htmlAttributes: new { @class = "custom-file-label", @for = "customFileLang" })
+
+                            @Html.TextBoxFor(model => model.img, new { @type = "file", @class = "custom-file-input", @lang = "es" })
+                            @Html.ValidationMessageFor(model => model.img, "", new { @class = "text-danger" })
+
+                        </div>
+
+
+
+                    </div>
+                        <div class="container" style="padding-top:20px;">
+                            <div class="row">
+
+                                <div class="col">
+                                    <input type="submit" value="Agregar" id="file" class="btn btn-primary mx-auto" />
+                                </div>
+                                <div class="col">
+                                </div>
+                                <div class="col">
+                                    <button class="btn btn-warning  float-right" type="button" id="btn_act" name="btn_act" onclick="location.href='@Url.Action("Index")'"><span class="glyphicon glyphicon-edit"> Cancelar </span></button>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+</body>
+
+
+</html>
+
+
+

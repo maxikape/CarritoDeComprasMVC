@@ -1,0 +1,12 @@
+C:\Users\MaxX\source\repos\CarritoCompras.PracticoMVC\Entidades\bin\Debug\Entidades.dll
+C:\Users\MaxX\source\repos\CarritoCompras.PracticoMVC\Entidades\bin\Debug\Entidades.pdb
+C:\Users\MaxX\source\repos\CarritoCompras.PracticoMVC\Entidades\obj\Debug\Entidades.csproj.CoreCompileInputs.cache
+C:\Users\MaxX\source\repos\CarritoCompras.PracticoMVC\Entidades\obj\Debug\Entidades.dll
+C:\Users\MaxX\source\repos\CarritoCompras.PracticoMVC\Entidades\obj\Debug\Entidades.pdb
+C:\Users\MaxX\source\repos\CarritoCompras.PracticoMVC\Entidades\obj\Debug\Entidades.csproj.AssemblyReference.cache
+C:\Users\tomtr\source\repos\CarritoCompras.PracticoMVC\Entidades\bin\Debug\Entidades.dll
+C:\Users\tomtr\source\repos\CarritoCompras.PracticoMVC\Entidades\bin\Debug\Entidades.pdb
+C:\Users\tomtr\source\repos\CarritoCompras.PracticoMVC\Entidades\obj\Debug\Entidades.csproj.AssemblyReference.cache
+C:\Users\tomtr\source\repos\CarritoCompras.PracticoMVC\Entidades\obj\Debug\Entidades.csproj.CoreCompileInputs.cache
+C:\Users\tomtr\source\repos\CarritoCompras.PracticoMVC\Entidades\obj\Debug\Entidades.dll
+C:\Users\tomtr\source\repos\CarritoCompras.PracticoMVC\Entidades\obj\Debug\Entidades.pdb

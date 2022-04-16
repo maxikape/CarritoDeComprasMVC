@@ -1,0 +1,124 @@
+﻿@model Entidades.Modelos.ListaProductosModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <div style="text-align: right">
+        @*<button class="btn btn-warning" type="button" id="load-partial" data-toggle="modal" data-target="load-partial"><span class="glyphicon glyphicon-edit"> Nuevo </span></button>*@
+        <button class="btn-sm btn-info" type="button" id="load-partial" onclick="location.href='@Url.Action("Create", "Admin")'"><span class="glyphicon glyphicon-new-window"> Nuevo </span></button>
+    </div>
+
+    <table class="table table-bordered " style="margin-top:8px">
+        <thead class="table-dark">
+            <tr>
+                <th style="width:auto" ;>Código</th>
+                <th style="width:auto" ;>Nombre</>
+                <th style="width:auto" ;>Marca</>
+                <th style="width:auto" ;>Precio</>
+                <th style="width:auto" ;>Estado</>
+                <th style="width:auto" ;>Foto</>
+                <th style="width:auto" ;></>
+
+            </tr>
+        </thead>
+
+        @foreach (var a in Model.Productos)
+        {
+            <tbody>
+                <tr>
+                    <td>@a.CodigoProducto</td>
+                    <td>@a.Nombre</td>
+                    <td>@a.NombreMarca</td>
+                    <td>@a.PrecioUnitario</td>
+                    <td>@a.Activo</td>
+
+                    <td class="center"> <img src="@a.UrlImage" class="" alt="@a.Nombre" width="40" ; height="40" /></td>
+
+                    <td style="text-align : center">
+                        <button class="btn-xs btn-warning" type="button" id="btn_act" name="btn_act" onclick="location.href='@Url.Action("Edit", "Admin", new { id = a.CodigoProducto })'"><span class="glyphicon glyphicon-edit"> Editar </span></button>
+
+                    </td>
+
+                </tr>
+            </tbody>
+        }
+    </table>
+</body>
+</html>
+
+@*<div class="card-footer clearfix">
+        <ul class="pagination pagination-sm m-0 float-right">
+            <li class="page-item"><a class="page-link" href="#">«</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">»</a></li>
+        </ul>
+    </div>*@
+
+
+<!-- Modal -->
+@*<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            $("#load-partial").click(function () {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/Create",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "html",
+                    success: function (response) {
+                        $('#resultado').html(response);
+                        $('#resultado').modal('show');
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            });
+        });
+    </script>*@
