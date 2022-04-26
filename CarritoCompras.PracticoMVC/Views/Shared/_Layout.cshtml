@@ -46,10 +46,9 @@
                             <img src="~/Content/images/ImgUser.jpg" alt="imagen de usuario" class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
-                            <span>Welcome,</span>
+                            <span>Bienvenido @Session["NombreUsuario"]</span>
                             @*//?????????????????*@
-                            @Session["NombreUsuario"]
-                            <br>
+                            
 
                             @*mouestra el nombre del usuario logueado*@
 
@@ -65,7 +64,7 @@
 
                             <ul class="nav side-menu">
                                 <li>
-                                    <a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                                    <a><i class="fa fa-home"></i> Carrito <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
 
                                         <li><a href="index2.html">s2</a></li>
@@ -79,7 +78,7 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
+                                    <a><i class="fa fa-edit"></i> Pedidos <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="form.html">General Form</a></li>
                                         <li><a href="form_advanced.html">Advanced Components</a></li>
@@ -142,74 +141,12 @@
 
                             <li>
                                 <a href="@Url.Action("Carrito","Home")">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    <span class="badge bg-green">8</span>
+                                    <i class="fa fa-shopping-cart @*contador-carrito*@"></i>
+                                    @*//contador carrito*@
+                                    <span class="badge bg-dark text-white ms-1 rounded-pill contador-carrito">0</span>
                                 </a>
                             </li>
-                            @*<li role="presentation" class="nav-item dropdown open">
-                                    <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-shopping-cart"  ></i>
-                                        <span class="badge bg-green">6</span>
-                                    </a>
-                                    <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
-                                        <li class="nav-item">
-                                            <a class="dropdown-item">
-                                                <span class="image"><img src="images/imgUser.jpg" alt="Profile Image" /></span>
-                                                <span>
-                                                    <span>John Smith</span>
-                                                    <span class="time">3 mins ago</span>
-                                                </span>
-                                                <span class="message">
-                                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="dropdown-item">
-                                                <span class="image"><img src="images/imgUser.jpg" alt="Profile Image" /></span>
-                                                <span>
-                                                    <span>John Smith</span>
-                                                    <span class="time">3 mins ago</span>
-                                                </span>
-                                                <span class="message">
-                                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="dropdown-item">
-                                                <span class="image"><img src="images/imgUser.jpg" alt="Profile Image" /></span>
-                                                <span>
-                                                    <span>John Smith</span>
-                                                    <span class="time">3 mins ago</span>
-                                                </span>
-                                                <span class="message">
-                                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="dropdown-item">
-                                                <span class="image"><img src="images/imgUser.jpg" alt="Profile Image" /></span>
-                                                <span>
-                                                    <span>John Smith</span>
-                                                    <span class="time">3 mins ago</span>
-                                                </span>
-                                                <span class="message">
-                                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <div class="text-center">
-                                                <a class="dropdown-item">
-                                                    <strong>See All Alerts</strong>
-                                                    <i class="fa fa-angle-right"></i>
-                                                </a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>*@
+
                         </ul>
                     </nav>
                 </div>
@@ -233,10 +170,48 @@
     </div>
 
     <!-- Scripts -->
-    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/Vendors/nprogress/nprogress.js"></script>
     <script src="~/Content/Aleta/js/custom.min.js"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+                obtenerCantidad();
+        })
+            function obtenerCantidad() {
+                jQuery.ajax({
+                    @*url: '@Url.Action("CantidadCarrito", "Home")',*@
+                    url: '/Home/CantidadCarrito',
+                    type: "GET",
+                    //data: { Cantidad:cantida},
+                    data:null,
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        $(".contador-carrito").text(data.respuesta);
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    },
+                    beforeSend: function () {
+
+                    },
+                });
+
+             }
+
+
+     
+
+
+
+
+
+
+
+
+    </script>
 
 </body>
 </html>

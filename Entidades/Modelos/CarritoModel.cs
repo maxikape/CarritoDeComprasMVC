@@ -13,6 +13,10 @@ namespace Entidades.Modelos
         public int IdUsuario { get; set; }
         public int CodigoProducto { get; set; }
         public int Cantidad { get; set; }
+        public string Nombre { get; set; }
+        public int PrecioUnitario { get; set; }
+        //public int Subtotal { get; set; }
+        
     }
 
 

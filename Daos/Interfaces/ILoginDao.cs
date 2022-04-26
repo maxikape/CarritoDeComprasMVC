@@ -10,5 +10,7 @@ namespace Daos.Interfaces
     public interface ILoginDao
     {
         Usuario EncontrarUsuario(string Usuario, string Password);
+        bool InsertarUsuario(Usuario usuario);
+        bool InsertarCliente(Usuario usuario);
     }
 }

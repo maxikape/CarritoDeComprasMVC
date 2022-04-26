@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entidades.Entidades
+namespace Entidades.Modelos
 {
-    public class Usuario
+    public class ResgistroUsuarioModel
     {
         public int IdUsuario { get; set; }
 
@@ -23,18 +23,16 @@ namespace Entidades.Entidades
         public string Apellido { get; set; }
 
         [Required(ErrorMessage = "Please enter password")]
-        
-        public int Password { get; set; }
 
-        public int PasswordSalt { get; set; }
+        public string Password { get; set; }
+
+        public string PasswordSalt { get; set; }
 
         public DateTime FechaCreacion { get; set; }
 
         public int Activo { get; set; }
 
-        public string RazonSocial { get; set; }
-
-        public List<Cliente> clientes { get; set; }
+        
 
     }
 }

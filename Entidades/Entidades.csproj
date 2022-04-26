@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entidades\Cliente.cs" />
     <Compile Include="Entidades\DetallePedido.cs" />
     <Compile Include="Entidades\Pedido.cs" />
     <Compile Include="Entidades\Marca.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="Modelos\CarritoModel.cs" />
     <Compile Include="Modelos\ListaPedidosModel.cs" />
     <Compile Include="Modelos\ListaProductosModel.cs" />
+    <Compile Include="Modelos\ResgistroUsuarioModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

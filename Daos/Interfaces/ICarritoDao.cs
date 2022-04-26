@@ -13,5 +13,8 @@ namespace Daos.Interfaces
     {
         bool InsertarEnCarrito(CarritoModel carritoModel);
         List<CarritoModel> MostrarCarrito(int IdUsuario);
+        bool EliminarProductoCarrito(int IdCarrito);
+        int RecuperarCantidad(int id);
+        bool UpdateCarrito(int car, int cant);
     }
 }

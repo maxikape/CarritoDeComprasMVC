@@ -113,5 +113,23 @@ namespace CarritoCompras.PracticoMVC.Controllers
         }
 
 
+        //vista para registro de nuevo usuario
+        public ActionResult Registrar()
+        {
+            return View();
+        }       
+        
+
+
+        [HttpPost]
+        public ActionResult Registrar(Usuario usuario)
+        {
+            
+            //inserto la tabla usuario 
+            _servicioLogin.InsertarUsuario(usuario);
+            //inserto en la tabla cliente
+            _servicioLogin.InsertarCliente(usuario);
+            return View();
+        }
     }
 }

@@ -41,9 +41,9 @@ namespace Daos.Daos
 
         //    return Pedidos;
         //}
-        private const string qrMostrarDetalleCarrito = @" SELECT    c.Id, c.IdUsuario, c.Cantidad, c.CodigoProducto
+        private const string qrMostrarDetalleCarrito = @" SELECT    c.Id, c.IdUsuario, c.Cantidad, c.CodigoProducto,p.Nombre,p.PrecioUnitario
 		                                                            FROM Carrito c
-                                                                    JOIN Productos as p on c.CodigoProducto = p.CodigoProducto
+                                                                    JOIN Productos as p on c.CodigoProducto = p.CodigoProducto 
                                                                     where c.IdUsuario = @IdUsuario ";
 
         //Muestra el listado de todos los pedidos
@@ -85,8 +85,6 @@ namespace Daos.Daos
                         idUsuario = carritoModel.IdUsuario,
                         cantidad = carritoModel.Cantidad,
                         codigoProducto = carritoModel.CodigoProducto
-
-
                     });
                     return true;
 
@@ -99,10 +97,91 @@ namespace Daos.Daos
                 throw;
             }
 
+        }
 
+        private const string qrEliminarDelCarrito = @" DELETE FROM Carrito  Where CodigoProducto = @codigoProducto";
+
+        public bool EliminarProductoCarrito(int codigoProducto)
+        {
+            try
+            {
+                int result = 0;
+                using (var con = AbrirConexion())
+                {
+                    result = con.Execute(qrEliminarDelCarrito, param: new { codigoProducto = codigoProducto } );
+                    return true;
+                }
+
+            }
+            catch (Exception)
+            {
+
+
+                throw;
+            }
+
+        }
+
+        private const string qrRecuperarCatidad = @"select SUM(Cantidad) Cantidad
+                                                            FROM Carrito 
+                                                           
+                                                            where IdUsuario = @id";
+
+
+        //devuelve cantidad
+        public int RecuperarCantidad(int id)
+        {
+
+
+            try
+            {
+                using (var con = AbrirConexion())
+                {
+                    
+                       var cant = con.QuerySingleOrDefault<CarritoModel>(qrRecuperarCatidad, param: new { id = id });
+
+                    return cant.Cantidad;
+                }
+
+
+            }
+
+            catch (Exception)
+            {
+
+                throw;
+            }
 
 
         }
 
+
+        private const string qrModificarCarrito = @"UPDATE Carrito SET Cantidad = @Cantidad
+					                                                      
+					                                                       Where CodigoProducto = @CodigoProducto;";
+
+        //Modifico la cantidad del carrito
+        public bool UpdateCarrito(int car, int cant)
+        {
+            try
+            {
+                int result = 0;
+                using (var con = AbrirConexion())
+                {
+
+                    result = con.Execute(qrModificarCarrito, param: new { CodigoProducto = car , Cantidad = cant } );
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
     }
+
+  
 }

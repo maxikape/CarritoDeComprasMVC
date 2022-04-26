@@ -21,13 +21,13 @@
             @using (Html.BeginForm("Logeo", "Login"))
             {
 
-                        <div class="form-group">
+        <div class="form-group">
 
 
-                            @Html.TextBoxFor(model => model.NombreUsuario, new { @class = "form-control", placeholder = "Usuario" });
-                            @Html.ValidationMessageFor(model => model.NombreUsuario, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(model => model.NombreUsuario, new { @class = "form-control", placeholder = "Usuario" });
+            @Html.ValidationMessageFor(model => model.NombreUsuario, "", new { @class = "text-danger" })
 
-                        </div>
+        </div>
 
                         <div class="form-group">
 
@@ -37,13 +37,26 @@
 
                         </div>
 
-                               <input type="submit" value="Agregar" id="file" class="btn btn-primary mx-auto" />     
-                               
-             }
 
 
+                        <div>
+                            <input type="submit" value="Agregar" id="file" class="btn btn-primary mx-auto" />
+
+
+                            @*<button class="btn-sm btn-link" type="button" id="load-partial" onclick="location.href='@Url.Action("Registrar", "Login")'"><span class="glyphicon glyphicon-new-window"> Nuevo </span></button>*@
+
+                          
+
+
+                        </div>
+
+                        <div class="float-right" style="padding-right:20px">
+                            @Html.ActionLink("Registrarse", "Registrar")
+
+                        </div>
+
+            }
         </div>
     </div>
 
-</body> 
-                                                                
+</body>

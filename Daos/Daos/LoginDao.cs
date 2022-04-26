@@ -79,6 +79,102 @@ namespace Daos.Daos
 
         }
 
+
+
+ 
+
+
+        private const string qrInsertUsuario = @"INSERT INTO Usuarios(NombreUsuario,Nombre,Apellido,IdRol,Password,Activo) 
+
+                                               Values(@nombreUsuario, @nombre,@apellido,@idRol,@password,@activo) ";
+
+
+        private const string qrInserCliente = @"INSERT INTO Clientes(RazonSocial,IdUsuario) 
+
+                                               Values(@razonSocial, @idUsuario) ";
+
+        //insertar nuevo usuario para el login
+        public bool InsertarUsuario(Usuario usuario)
+        {
+
+            try
+            {
+                int result = 0;
+                using (var con = AbrirConexion())
+                {
+                    //inserto en la tabla usuario
+                    result = con.Execute(qrInsertUsuario, new
+                    {
+                        nombreusuario = usuario.Nombre,
+                        nombre = usuario.Nombre,
+                        apellido = usuario.Apellido,
+                        idRol = 2,
+                        password = usuario.Password,
+                        //fechaCreacion = usuario.FechaCreacion,
+                        activo = usuario.Activo
+                    });
+
+                   ////var  user = UsuarioDao.RecuperarPorNombre( Convert.ToString(usuario.Nombre));
+                   // //inserto en la tabla cliente
+                   // result = con.Execute(qrInserCliente, new
+                   // {
+                   //     razonSocial=usuario.RazonSocial,
+                   //     //fechaCreacion= usuario.FechaCreacion,
+                   //     idUsuario= usuario.IdUsuario
+              
+                   // });
+                    return true;
+
+                    
+
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+        }
+
+        //insertar nuevo usuario para el login
+        public bool InsertarCliente(Usuario usuario)
+        {
+
+            try
+            {
+                int result = 0;
+                using (var con = AbrirConexion())
+                {
+
+
+                    //var  user = UsuarioDao.RecuperarPorNombre( Convert.ToString(usuario.Nombre));
+                    //inserto en la tabla cliente
+                    result = con.Execute(qrInserCliente, new
+                    {
+                        razonSocial = usuario.RazonSocial,
+                        //fechaCreacion= usuario.FechaCreacion,
+                        idUsuario = usuario.IdUsuario
+
+                    });
+                    return true;
+
+
+
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+        }
+
         //private const string QrRolUsuario = @"select* from Roles
         //                                     INNER JOIN Usuarios
         //                                     ON Roles.IdRol = Usuarios.IdRol

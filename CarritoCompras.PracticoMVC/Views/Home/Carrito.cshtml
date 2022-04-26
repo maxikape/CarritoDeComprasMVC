@@ -1,61 +1,169 @@
-﻿@model Entidades.Entidades.Pedido
+﻿@model List<Entidades.Modelos.CarritoModel>
 
 @{
-    Layout = null;
+
 }
 
 <!DOCTYPE html>
 
 <html>
 <head>
+
     <meta name="viewport" content="width=device-width" />
     <title>Carrito</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DetallePedidos)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CodigoCliente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Observacion)
-            </th>
-            <th></th>
-        </tr>
 
-        @foreach (var item in Model.DetallePedidos)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumeroPedido)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CodigoProducto)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PrecioUnitario)
-                </td>
-                <td>
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
-        }
 
-        @Html.DisplayFor(model => model.Observacion)
+    <div class="container">
 
-    </table>
+
+
+
+        <div class="card-body ">
+
+            <table class="table table-bordered " style="margin-top:60px">
+                <thead class="table-dark">
+                    <tr>
+                        <th>
+                            Producto
+                        </th>
+                        <th>
+                            Precio Unitario
+                        </th>
+                        <th>
+                            Cantidad
+                        </th>
+
+                        <th>
+                            Subtotal
+                        </th>
+
+                        <th>
+
+                        </th>
+
+                    </tr>
+                </thead>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PrecioUnitario)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cantidad)
+                        </td>
+                        <td>
+
+
+                            @*@Html.DisplayFor(modelItem => item.Subtotal)*@
+
+                            @Html.Label(Convert.ToString((item.Cantidad * item.PrecioUnitario)))
+                        </td>
+
+
+                        <td>
+
+                            @*@Html.ActionLink("Eliminar", "EliminarProductoCarrito", new { @class = "btn-xs btn-warning",  id=item.Id  })*@
+                            @*<button class="btn-xs btn-default" type="button" id="btn_act" name="btn_act" onclick="location.href='@Url.Action("EliminarProductoCarrito", "Home", new { id = item.Id })'"><span class="glyphicon "> Eliminar </span></button>*@
+                            @*<button class="btn-xs btn-default " type="button" id="btn_act" name="btn_act" onclick="location.href='@Url.Action("Carrito", "Home", new { id = item.Id })'"><span class="glyphicon "> Eliminar </span></button>*@
+                            <button type="button" id="@item.CodigoProducto" class="btn btn-sm btn-primary btnEliminar" data-id="@item.CodigoProducto"> Eliminar</button>
+                        </td>
+                    </tr>
+                }
+
+
+            </table>
+
+            <div class="form-group">
+
+                <p>Observaciones</p>
+                @Html.TextArea("Observaciones", new { @class = "form-control", @style = "width: 82%; height: 120px;" })
+            </div>
+        </div>
+        <div class="container" style="padding-top:1px;">
+            <div class="row">
+
+                <div class="col-2">
+                    <input type="submit" value="Enviar Pedido" id="file" class="btn btn-dark mx-auto float-left" />
+
+                </div>
+                <div class="col-3" style="padding-left:20px;">
+                    <button class="btn btn-dark " type="button" id="btn_act" name="btn_act" onclick="location.href='@Url.Action("Index")'"><span class=""> Seguir Comprando </span></button>
+
+                </div>
+                <div class="col-3" style="padding-left:20px;">
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/sweetalert2.all.min.js.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        $('.btnEliminar').click(function () {
+            var Codigo = $(this).attr("data-id");
+
+            Swal.fire({
+                title: 'Desea eliminar este producto?',
+                text: "¡No podrás revertir esta accion!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Confirmar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+
+                        url: '/Home/EliminarProductoCarrito',
+                        type: 'Post',
+                        data: { CodigoProducto: Codigo },
+                        dataType: 'json',
+
+                        success: function (result) {
+
+                            //cantidad pasada al contador-carrito
+                            $('.contador-carrito').text(result.Cantidad);
+                        },
+
+                        error: function () {
+                            console.log("fallo");
+
+                        }
+
+                    });
+
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Producto eliminado!!',
+                        showConfirmButton: false,
+                        timer: 1550
+                    })
+                }
+            })
+
+        });
+
+    </script>
+
 </body>
 </html>
+
+            

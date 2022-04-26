@@ -29,14 +29,13 @@
 
 
     <section class="content" style="background-color: white; margin-left: 50px; margin-top: 1px;">
-
+      
         <div class="row" style="background-color: white;">
 
             <div class="card-group row " style="background-color: white;">
 
                 @foreach (var m in Model)
                 {
-
                     <div id="cards_landscape_wrap-2" class=" col-lg-3 col-12" style="height: 20rem; background-color:white; margin-top:35px">
 
                         <div class="" style="max-width: 10rem; height: 20rem;">
@@ -48,7 +47,7 @@
                                     <p class="card-text"> $@m.PrecioUnitario</p>
 
                                     @*<p> @Html.ActionLink("Agregar", "Carrito", "Home", new { Id = m.CodigoProducto })</p>
-                                        <input class="btn-xs btn-primary" itemid="m.CodigoProducto" type="button" id="AgregarCarrito" name="btn_act" onclick="AgregarCarrito(this)" onclick="location.href='@Url.Action("Carrito", "Home", new { id = m.CodigoProducto })'"><span class="glyphicon glyphicon-alert"> Agregar </span>*@
+                                    <input class="btn-xs btn-primary" itemid="m.CodigoProducto" type="button" id="AgregarCarrito" name="btn_act" onclick="AgregarCarrito(this)" onclick="location.href='@Url.Action("Carrito", "Home", new { id = m.CodigoProducto })'"><span class="glyphicon glyphicon-alert"> Agregar </span>*@
 
                                 </div>
 
@@ -67,10 +66,8 @@
 
     </section>
 
-
-    <!-- Modal -->
     <div class="modal fade  " id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:260px;">
-        <div class="modal-dialog" role="document" >
+        <div class="modal-dialog" role="document">
             <div class="modal-content ">
                 <div class="modal-header">
                     <h5 class="modal-title abs-center" id="exampleModalLabel">Cantidad</h5>
@@ -80,9 +77,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="abs-center">@Html.TextBox("txtCant")</div>
-                    
 
-                    
+
+
 
                 </div>
                 <div class="modal-footer abs-center">
@@ -149,9 +146,13 @@
                         icon: 'success',
                         title: 'Producto Agregado!!',
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 1550
                     })
+
+                    //cantidad pasada al contador-carrito
+                    $('.contador-carrito').text(result.Cantidad);
                 },
+                
                 error: function () {
                     console.log("fallo");
 
@@ -159,6 +160,9 @@
             });
 
         });
+
+    
+
 
 
 

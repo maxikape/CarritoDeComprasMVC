@@ -22,6 +22,9 @@ namespace CarritoCompras.PracticoMVC.Controllers
             this._servicioUsuario = new ServicioUsuario();
             this._serviciocarrito = new ServicioCarrito();
         }
+        //recuperr el usuario
+        private static Usuario recupero;
+        
 
 
 
@@ -30,6 +33,9 @@ namespace CarritoCompras.PracticoMVC.Controllers
             //redirige login
 
             //if (Session["Rol"].ToString() == "2")
+            var nombre = Session["NombreUsuario"].ToString();
+             recupero = _servicioUsuario.RecuperarPorNombre(nombre);
+
             var pro = _servicioProductos.MostrarProductosUsuario();
               
             //var tuple = new Tuple<List<Producto>, CarritoModel>(pro, new CarritoModel()); 
@@ -64,43 +70,65 @@ namespace CarritoCompras.PracticoMVC.Controllers
         //}
 
 
+        //agrega productos al carrito
         [HttpPost]
         public ActionResult AgregarCarrito(CarritoModel carritoModel)
         {
             //recuperar el usuario de la sesion , traer su id para agracarlo a carritoModel
-            var nombre = Session["NombreUsuario"].ToString();
-            var recupero = _servicioUsuario.RecuperarPorNombre(nombre);
+            //var nombre = Session["NombreUsuario"].ToString();
+            //var recupero = _servicioUsuario.RecuperarPorNombre(nombre);
              carritoModel.IdUsuario = recupero.IdUsuario;
+            
 
             //Inserta productos en la Tabla carrito
             _serviciocarrito.InsertarEnCarrito(carritoModel);
-            
-            return Json("");
+            int _respuesta = 0;
+            _respuesta = _serviciocarrito.RecuperarCantidad(recupero.IdUsuario);
+
+            return Json(new { Cantidad = _respuesta });
 
 
         }
 
 
         
-
+        //muesta la vista del carrito
         [HttpGet]
-        public ActionResult Carrito(Pedido pedidos)
+        public ActionResult Carrito()
+        
         {
-
-            var nombre = Session["NombreUsuario"].ToString();
-            var recupero = _servicioUsuario.RecuperarPorNombre(nombre);
+       
             var us = recupero.IdUsuario;
             
-            var car = _serviciocarrito.MostrarCarrito(us);
-
-            
-            
+            //Le paso el id Usuario para traer la lista de su carrito
+            var car = _serviciocarrito.MostrarCarrito(us);  
 
             return View(car);
            
 
-        }   
-        
+        }
+
+
+        [HttpPost]
+        public ActionResult EliminarProductoCarrito(CarritoModel carritoModel)
+
+        {
+
+            //Le paso el codigodelProducto para eliminarlo
+             _serviciocarrito.EliminarProductoCarrito(carritoModel.CodigoProducto);
+
+            //recupero la cantidad del carrito para enviar al contador
+            int _respuesta = 0;
+            _respuesta = _serviciocarrito.RecuperarCantidad(recupero.IdUsuario);
+
+            return Json(new { Cantidad = _respuesta }) ;
+           
+
+
+        }
+
+
+
         [HttpPost]
         public JsonResult Carrito(int itemid,string h)
         {
@@ -113,5 +141,16 @@ namespace CarritoCompras.PracticoMVC.Controllers
 
             return View();
         }
+
+
+        [HttpGet]
+        public JsonResult CantidadCarrito()
+        {
+
+            int _respuesta = 0;
+            _respuesta = _serviciocarrito.RecuperarCantidad(recupero.IdUsuario);
+            return Json(new { respuesta = _respuesta }, JsonRequestBehavior.AllowGet);
+        }
+ 
     }
 }
